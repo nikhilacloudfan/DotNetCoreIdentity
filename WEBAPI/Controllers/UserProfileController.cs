@@ -36,7 +36,8 @@ namespace WEBAPI.Controllers
             {
                 user.FullName,
                 user.Email,
-                user.UserName
+                user.UserName,
+                user.MaxCharacterCount
             };
         }
 

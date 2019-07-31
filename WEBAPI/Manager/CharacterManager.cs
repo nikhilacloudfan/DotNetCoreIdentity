@@ -46,6 +46,8 @@ namespace WEBAPI.Manager
 
         public async Task<int> SaveCharacter(GameCharacter character, string userId)
         {
+            if (_context.Characters.Any(m => m.CharacterName == character.CharacterName))
+                return 2;
             var characterDescription = JsonConvert.SerializeObject(character);
             var gameCharacter = new Character()
             {
@@ -60,6 +62,8 @@ namespace WEBAPI.Manager
 
         public async Task<int> SaveDesignedCharacter(GameCharacter character, string userId)
         {
+            if (_context.UserCharacters.Any(m => m.CharacterName == character.Name && m.UserId == userId))
+                return 2;
             var characterDescription = JsonConvert.SerializeObject(character);
             var gameCharacter = new UserCharacter()
             {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WEBAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,11 +42,43 @@ namespace WEBAPI.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(150)", nullable: true)
+                    FullName = table.Column<string>(type: "nvarchar(150)", nullable: true),
+                    MaxCharacterCount = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Characters",
+                columns: table => new
+                {
+                    CharacterId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CharacterName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    CharacterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(900)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Characters", x => x.CharacterId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCharacters",
+                columns: table => new
+                {
+                    UserCharacterId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CharacterType = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    CharacterName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    CharacterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(900)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCharacters", x => x.UserCharacterId);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,6 +187,26 @@ namespace WEBAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "9610172b-c6d0-4971-8354-428601d13dce", "74b0f4df-6465-429d-9ee6-d602ce6f7185", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "96032527-6e7b-4368-a05f-e81b00c1f1ad", "cef3d923-4acf-4bbf-9db2-758302810924", "Customer", "CUSTOMER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "FullName", "MaxCharacterCount" },
+                values: new object[] { "3b24d344-d36a-4f20-803f-ec321074c8c6", 0, "95c71621-b867-46d4-97d8-b0795926302e", "ApplicationUser", "admin@firstam.com", true, false, null, "ADMIN@FIRSTAM.COM", "ADMIN", "AQAAAAEAACcQAAAAEKVDTQ/ZzZjLnWpQcWFvoPT1hpFvHBSVfwUZMKmE/a1TPBKSVwUZwh1DSC3xlOXuOA==", null, false, "", false, "admin", null, 0 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "3b24d344-d36a-4f20-803f-ec321074c8c6", "9610172b-c6d0-4971-8354-428601d13dce" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -211,6 +263,12 @@ namespace WEBAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Characters");
+
+            migrationBuilder.DropTable(
+                name: "UserCharacters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

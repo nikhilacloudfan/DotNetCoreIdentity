@@ -39,7 +39,8 @@ namespace WEBAPI.Controllers
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                FullName = model.FullName
+                FullName = model.FullName,
+                MaxCharacterCount = _appSettings.Max_Character_Count
             };
             try
             {

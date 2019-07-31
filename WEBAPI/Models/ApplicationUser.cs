@@ -11,5 +11,8 @@ namespace WEBAPI.Models
     {
         [Column(TypeName ="nvarchar(150)")]
         public string FullName { get; set; }
+        [Column(TypeName = "int")]
+        public int MaxCharacterCount { get; set; }
+
     }
 }

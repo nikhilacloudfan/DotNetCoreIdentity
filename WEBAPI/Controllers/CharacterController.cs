@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WEBAPI.Manager.Interface;
 using WEBAPI.Models;
@@ -15,9 +16,12 @@ namespace WEBAPI.Controllers
     public class CharacterController : ControllerBase
     {
         private ICharacterManager _characterManager;
-        public CharacterController(ICharacterManager characterManager)
+        private UserManager<ApplicationUser> _userManager;
+
+        public CharacterController(ICharacterManager characterManager, UserManager<ApplicationUser> userManager)
         {
             _characterManager = characterManager;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -77,6 +81,28 @@ namespace WEBAPI.Controllers
 
             var result = _characterManager.GetAllUserCharacters(userId);
             return result;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("UpdateMaxCharacterCount/{count}")]
+        public async Task<int> UpdateMaxCharacterCount(int count)
+        {
+            try
+            {
+                var users = await _userManager.GetUsersInRoleAsync("Customer");
+                users.ToList().AddRange(await _userManager.GetUsersInRoleAsync("Admin"));
+                foreach (var user in users)
+                {
+                    user.MaxCharacterCount = count;
+                    await _userManager.UpdateAsync(user);
+                }
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
 
 

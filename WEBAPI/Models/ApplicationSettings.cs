@@ -9,5 +9,6 @@ namespace WEBAPI.Models
     {
         public string JWT_SECRET { get; set; }
         public string Client_URL { get; set; }
+        public int Max_Character_Count { get; set; }
     }
 }

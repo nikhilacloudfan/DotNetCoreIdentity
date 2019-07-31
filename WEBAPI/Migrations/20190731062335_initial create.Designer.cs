@@ -10,8 +10,8 @@ using WEBAPI.Models;
 namespace WEBAPI.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190526164542_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190731062335_initial create")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,11 @@ namespace WEBAPI.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new { Id = "9610172b-c6d0-4971-8354-428601d13dce", ConcurrencyStamp = "74b0f4df-6465-429d-9ee6-d602ce6f7185", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "96032527-6e7b-4368-a05f-e81b00c1f1ad", ConcurrencyStamp = "cef3d923-4acf-4bbf-9db2-758302810924", Name = "Customer", NormalizedName = "CUSTOMER" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -172,6 +177,10 @@ namespace WEBAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new { UserId = "3b24d344-d36a-4f20-803f-ec321074c8c6", RoleId = "9610172b-c6d0-4971-8354-428601d13dce" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -191,6 +200,51 @@ namespace WEBAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WEBAPI.Models.Character", b =>
+                {
+                    b.Property<int>("CharacterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CharacterDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CharacterName")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(900)");
+
+                    b.HasKey("CharacterId");
+
+                    b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("WEBAPI.Models.UserCharacter", b =>
+                {
+                    b.Property<int>("UserCharacterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CharacterDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CharacterName")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CharacterType")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(900)");
+
+                    b.HasKey("UserCharacterId");
+
+                    b.ToTable("UserCharacters");
+                });
+
             modelBuilder.Entity("WEBAPI.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -198,9 +252,16 @@ namespace WEBAPI.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<int>("MaxCharacterCount")
+                        .HasColumnType("int");
+
                     b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new { Id = "3b24d344-d36a-4f20-803f-ec321074c8c6", AccessFailedCount = 0, ConcurrencyStamp = "95c71621-b867-46d4-97d8-b0795926302e", Email = "admin@firstam.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "ADMIN@FIRSTAM.COM", NormalizedUserName = "ADMIN", PasswordHash = "AQAAAAEAACcQAAAAEKVDTQ/ZzZjLnWpQcWFvoPT1hpFvHBSVfwUZMKmE/a1TPBKSVwUZwh1DSC3xlOXuOA==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin", MaxCharacterCount = 0 }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

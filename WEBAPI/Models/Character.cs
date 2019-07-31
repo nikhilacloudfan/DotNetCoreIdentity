@@ -58,4 +58,5 @@ namespace WEBAPI.Models
         public string UserId { get; set; }
 
     }
+
 }
