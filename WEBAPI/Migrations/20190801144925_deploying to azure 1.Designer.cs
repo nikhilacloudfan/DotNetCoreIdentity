@@ -10,8 +10,8 @@ using WEBAPI.Models;
 namespace WEBAPI.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190731062335_initial create")]
-    partial class initialcreate
+    [Migration("20190801144925_deploying to azure 1")]
+    partial class deployingtoazure1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,8 +45,8 @@ namespace WEBAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "9610172b-c6d0-4971-8354-428601d13dce", ConcurrencyStamp = "74b0f4df-6465-429d-9ee6-d602ce6f7185", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "96032527-6e7b-4368-a05f-e81b00c1f1ad", ConcurrencyStamp = "cef3d923-4acf-4bbf-9db2-758302810924", Name = "Customer", NormalizedName = "CUSTOMER" }
+                        new { Id = "8521b469-96cf-44ea-960d-71c2d7ecc5bb", ConcurrencyStamp = "94145fe8-b97d-49f1-b0ca-98d1aed8e2da", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "d797a2e3-edda-478c-8e0d-7f91dcdc012c", ConcurrencyStamp = "45dd2c85-4649-4408-ab15-f079ee5eccea", Name = "Customer", NormalizedName = "CUSTOMER" }
                     );
                 });
 
@@ -179,7 +179,7 @@ namespace WEBAPI.Migrations
                     b.ToTable("AspNetUserRoles");
 
                     b.HasData(
-                        new { UserId = "3b24d344-d36a-4f20-803f-ec321074c8c6", RoleId = "9610172b-c6d0-4971-8354-428601d13dce" }
+                        new { UserId = "b5f7f03e-699c-4138-953f-a6c801edbe2a", RoleId = "8521b469-96cf-44ea-960d-71c2d7ecc5bb" }
                     );
                 });
 
@@ -260,7 +260,7 @@ namespace WEBAPI.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
 
                     b.HasData(
-                        new { Id = "3b24d344-d36a-4f20-803f-ec321074c8c6", AccessFailedCount = 0, ConcurrencyStamp = "95c71621-b867-46d4-97d8-b0795926302e", Email = "admin@firstam.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "ADMIN@FIRSTAM.COM", NormalizedUserName = "ADMIN", PasswordHash = "AQAAAAEAACcQAAAAEKVDTQ/ZzZjLnWpQcWFvoPT1hpFvHBSVfwUZMKmE/a1TPBKSVwUZwh1DSC3xlOXuOA==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin", MaxCharacterCount = 0 }
+                        new { Id = "b5f7f03e-699c-4138-953f-a6c801edbe2a", AccessFailedCount = 0, ConcurrencyStamp = "8854ecfc-0598-4f50-b7ee-82be927de42a", Email = "admin@firstam.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "ADMIN@FIRSTAM.COM", NormalizedUserName = "ADMIN", PasswordHash = "AQAAAAEAACcQAAAAEEKN9jB9C8b39qJMxEP27sWs7HZWFkrpW9NoMkPFOZ7ElNinJOFcyH9/M0pYFQ2GAg==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin", MaxCharacterCount = 5 }
                     );
                 });
 

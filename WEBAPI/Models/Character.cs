@@ -11,6 +11,7 @@ namespace WEBAPI.Models
     {
         [Required]
         public string CharacterName { get; set; }
+        [DataType(DataType.Text, ErrorMessage = "Name Not Provided")]
         public string Name { get; set; }
         public int CharacterId { get; set; }
         public List<Props> Properties { get; set; }

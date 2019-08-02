@@ -59,31 +59,36 @@ namespace WEBAPI.Controllers
         //POST : api/ApplicationUser/Login
         public async Task<IActionResult> Login(LoginModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (ModelState.IsValid)
             {
-                //Get the role assigned to this user
-                var role = await _userManager.GetRolesAsync(user);
-                IdentityOptions _options = new IdentityOptions();
-
-                var tokenDescriptor = new SecurityTokenDescriptor()
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    Subject = new ClaimsIdentity(new Claim[] {
+                    //Get the role assigned to this user
+                    var role = await _userManager.GetRolesAsync(user);
+                    IdentityOptions _options = new IdentityOptions();
+
+                    var tokenDescriptor = new SecurityTokenDescriptor()
+                    {
+                        Subject = new ClaimsIdentity(new Claim[] {
                         new Claim("UserID", user.Id.ToString()),
                         new Claim(_options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(5),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_SECRET)), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token });
+                        Expires = DateTime.UtcNow.AddMinutes(5),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_SECRET)), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                    var token = tokenHandler.WriteToken(securityToken);
+                    return Ok(new { token });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Username or Password is incorrect" });
+                }
+
             }
-            else
-            {
-                return BadRequest(new { message = "Username or Password is incorrect" });
-            }
+            return BadRequest(new { message = "Username or Password is incorrect" });
         }
 
         [HttpPost]

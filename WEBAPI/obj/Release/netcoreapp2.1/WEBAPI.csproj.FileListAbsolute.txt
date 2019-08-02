@@ -12,3 +12,4 @@ C:\Users\nrathnakara\source\repos\Asp.Net Core\LoginLogout Idntity Core JWT Toke
 C:\Users\nrathnakara\source\repos\Asp.Net Core\LoginLogout Idntity Core JWT Tokens\WEBAPI\WEBAPI\obj\Release\netcoreapp2.1\WEBAPI.RazorTargetAssemblyInfo.cache
 C:\Users\nrathnakara\source\repos\Asp.Net Core\LoginLogout Idntity Core JWT Tokens\WEBAPI\WEBAPI\obj\Release\netcoreapp2.1\WEBAPI.dll
 C:\Users\nrathnakara\source\repos\Asp.Net Core\LoginLogout Idntity Core JWT Tokens\WEBAPI\WEBAPI\obj\Release\netcoreapp2.1\WEBAPI.pdb
+C:\Users\nrathnakara\source\repos\Asp.Net Core\LoginLogout Idntity Core JWT Tokens\WEBAPI\WEBAPI\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
